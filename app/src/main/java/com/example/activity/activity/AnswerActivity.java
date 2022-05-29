@@ -3,6 +3,8 @@ package com.example.activity.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import com.example.activity.MyApplication;
 import com.example.activity.R;
 import com.example.activity.bean.QuestBean;
+import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.MatchMessage;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -38,25 +41,36 @@ import androidx.viewpager.widget.ViewPager;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.logging.Handler;
 
 
 public class AnswerActivity extends BaseActivity implements Chronometer.OnChronometerTickListener,FragmentCallBack {
     @BindView(R.id.vp_answer)
-    ViewPager vp_answer;
+    volatile ViewPager vp_answer;
 
     @BindView(R.id._chro_exam)
     Chronometer chronometer;
 
-    private volatile ArrayList<Fragment> fragmentList;
+    private volatile ArrayList<AnswerFragment> fragmentList;
     private volatile List<QuestBean> message;
     private String field;
+    private String username;
     private String myanswer = "null";
-    private String playernum;
+    private String playertype;
+    private String[] playername;
+    private int playernum;
     private int myscore = 0;
     private int second = 20;
-    private int nowpager = 0;
-
+    private boolean ifSub = false;
+    private volatile int nowpager = 0;
+    private TextView[] score;
+    private TextView[] name;
+    private ImageView[] player;
+    private HashMap<String, Integer> UIhelper = new HashMap<>();
 
     @Override
     int getLayoutId()
@@ -67,10 +81,84 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
     @Override
     void getPreIntent()
     {
-        playernum = ((MyApplication)getApplication()).getPlaytype();
+        username = ((MyApplication)getApplication()).getUsername();
+        playertype = ((MyApplication)getApplication()).getPlaytype();
+        playername = ((MyApplication)getApplication()).getPlayername();
+        playernum = Integer.parseInt(getIntent().getExtras().get("num").toString().trim());
         field = getIntent().getExtras().get("field").toString().trim();
+        score = new TextView[4];
+        name = new TextView[4];
+        player = new ImageView[4];
+        score[1] = (TextView) findViewById(R.id.answer_score2);
+        score[2] = (TextView) findViewById(R.id.answer_score3);
+        score[3] = (TextView) findViewById(R.id.answer_score4);
+        score[0] = (TextView) findViewById(R.id.answer_score1);
+        name[0] = (TextView) findViewById(R.id.answer_name1);
+        name[1] = (TextView) findViewById(R.id.answer_name2);
+        name[2] = (TextView) findViewById(R.id.answer_name3);
+        name[3] = (TextView) findViewById(R.id.answer_name4);
+        player[0] = (ImageView) findViewById(R.id.answer_player1);
+        player[1] = (ImageView) findViewById(R.id.answer_player2);
+        player[2] = (ImageView) findViewById(R.id.answer_player3);
+        player[3] = (ImageView) findViewById(R.id.answer_player4);
+        int num = playername.length;
+        for(int i = 0; i < num; i++)
+            UIhelper.put(playername[i], i);
+        turnstart();
     }
 
+    public void turnstart()
+    {
+        int num = playername.length;
+        switch (num)
+        {
+            case 1:
+                name[0].setText(playername[0]);
+                name[1].setVisibility(View.INVISIBLE);
+                name[2].setVisibility(View.INVISIBLE);
+                name[3].setVisibility(View.INVISIBLE);
+                score[1].setVisibility(View.INVISIBLE);
+                score[2].setVisibility(View.INVISIBLE);
+                score[3].setVisibility(View.INVISIBLE);
+                player[1].setVisibility(View.INVISIBLE);
+                player[2].setVisibility(View.INVISIBLE);
+                player[3].setVisibility(View.INVISIBLE);
+                break;
+            case 2:
+                name[0].setText(playername[0]);
+                name[1].setText(playername[1]);
+                name[2].setVisibility(View.INVISIBLE);
+                name[3].setVisibility(View.INVISIBLE);
+                score[2].setVisibility(View.INVISIBLE);
+                score[3].setVisibility(View.INVISIBLE);
+                player[2].setVisibility(View.INVISIBLE);
+                player[3].setVisibility(View.INVISIBLE);
+                break;
+            case 3:
+                name[0].setText(playername[0]);
+                name[1].setText(playername[1]);
+                name[2].setText(playername[2]);
+                name[3].setVisibility(View.INVISIBLE);
+                score[3].setVisibility(View.INVISIBLE);
+                player[3].setVisibility(View.INVISIBLE);
+                break;
+            case 4:
+                name[0].setText(playername[0]);
+                name[1].setText(playername[1]);
+                name[2].setText(playername[2]);
+                name[3].setText(playername[3]);
+        }
+    }
+
+    public void renew(HashMap<String, String> allscore)
+    {
+        int num = playername.length;
+        for(int i = 0; i < num; i++)
+        {
+            String this_score = allscore.get(playername[i]);
+            score[UIhelper.get(playername[i])].setText(this_score);
+        }
+    }
 
     @Override
     void initView() {
@@ -91,16 +179,52 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         chronometer.setOnChronometerTickListener(this);
     }
 
-    /**
-     * 计时器规则
-     *
-     * @param chronometer
-     */
+
     @Override
      public void onChronometerTick(Chronometer chronometer) {
+        Button b = (Button)findViewById(R.id._btn_tool);
+        b.setText(second+"");
         second--;
+        int sub = ((MyApplication)getApplication()).getSubNow();
+        if(sub == playernum)
+        {
+            ((MyApplication)getApplication()).restSubNow();
+            if(nowpager == fragmentList.size()-1)
+            {
+                renew(((MyApplication)getApplication()).getGameresult());
+                Thread th = new Thread(){
+                    @Override
+                    public void run()
+                    {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        ((MyApplication)getApplication()).sendMessage(new CompeteMessage(username, myscore, 1));
+                        Intent intent1 = new Intent(AnswerActivity.this,GradeActivity.class);
+                        intent1.putExtra("grade",myscore+"");
+                        intent1.putExtra("num",playertype);
+                        startActivity(intent1);
+                    }
+                };
+                th.start();
+            }
+            vp_answer.setCurrentItem(++nowpager);
+            ifSub = false;
+            Button subm = (Button) findViewById(R.id._btn_submit);
+            subm.setText("提交答案");
+            renew(((MyApplication)getApplication()).getGameresult());
+            second = 20;
+        }
         if (second == 0) {
-
+            ((MyApplication)getApplication()).restSubNow();
+            vp_answer.setCurrentItem(++nowpager);
+            ifSub = false;
+            Button subm = (Button) findViewById(R.id._btn_submit);
+            subm.setText("提交答案");
+            renew(((MyApplication)getApplication()).getGameresult());
+            second = 20;
         }
     }
 
@@ -112,11 +236,6 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
             return ("" + second);
         }
     }
-
-
-
-
-
 
     private void initNet(String field)
     {
@@ -179,14 +298,11 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
             super(fm);
         }
 
-
-        //获取条目
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
         }
 
-        //数目
         @Override
         public int getCount() {
             return fragmentList.size();
@@ -199,18 +315,48 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         switch (v.getId())
         {
             case R.id._btn_submit:
+                if(ifSub)
+                    break;
+                ifSub = true;
+                Button subm = (Button) findViewById(R.id._btn_submit);
+                subm.setText("已提交");
+                int else_score = 0;
+                if(second >= 17)
+                    else_score = 10;
+                else if(second >= 10)
+                    else_score = 5;
                 if(myanswer == "null")
                 {
                     return;
                 }
                 if(myanswer.equals(message.get(nowpager).getAnswer()))
                 {
-                    myscore += 20;
+                    myscore += 20 + else_score;
+                }
+                else
+                {
+                    myscore -= 10;
                 }
                 myanswer = "null";
-                if(nowpager == fragmentList.size() - 1)
-                    getGrade();
-                vp_answer.setCurrentItem(++nowpager);
+                if(nowpager == fragmentList.size() - 1) {
+                    if(!playertype.equals("match"))
+                    {
+                        getGrade();
+                        return;
+                    }
+                    ((MyApplication)getApplication()).sendMessage(new CompeteMessage(username, myscore, 0));
+                    return;
+                }
+                ((MyApplication)getApplication()).setScore(myscore+"");
+                if(!playertype.equals("match"))
+                {
+                    vp_answer.setCurrentItem(++nowpager);
+                    renew(((MyApplication)getApplication()).getGameresult());
+                }
+                else
+                {
+                    ((MyApplication)getApplication()).sendMessage(new CompeteMessage(username, myscore, 0));
+                }
             case R.id._btn_message:
             case R.id._btn_tool:
         }
@@ -233,19 +379,10 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
     }
 
     public void getGrade() {
-        if (playernum.equals("match")) {
-            String username = ((MyApplication)getApplication()).getUsername();
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    ((MyApplication) getApplication()).sendMessage(new CompeteMessage(username, myscore));
-                }
-            };
-        thread.start();
-        }
+        ((MyApplication)getApplication()).sendMessage(new CompeteMessage(username, myscore, 1));
         Intent intent1 = new Intent(AnswerActivity.this,GradeActivity.class);
         intent1.putExtra("grade",myscore+"");
-        intent1.putExtra("num",playernum);
+        intent1.putExtra("num",playertype);
         startActivity(intent1);
     }
 

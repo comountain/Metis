@@ -7,7 +7,7 @@ public class config {
     public static final String LogTag = "metis";
 
     //    主机 host
-    public static final String HOST = "http://192.168.1.106:8081/";
+    public static final String HOST = "http://192.168.0.56:8081/";
     //    登录网址
     public static final String URL_LOGIN = HOST + "LogLet";
     //    注册网址

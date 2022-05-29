@@ -1,27 +1,18 @@
 package com.example.activity.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.activity.MyApplication;
 import com.example.activity.R;
 import com.example.activity.message.MatchMessage;
-
+import android.view.View;
 import android.content.Intent;
-import android.os.Bundle;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
-import java.net.URI;
-import android.os.Handler;
-import android.os.Message;
-import android.widget.Button;
-
-import java.util.Date;
+import butterknife.OnClick;
 
 
 public class WaitActivity extends BaseActivity {
     private String player;
     private String field;
     private StringBuilder sb = new StringBuilder();
+    private String num;
 
     @Override
     int getLayoutId() {
@@ -32,6 +23,7 @@ public class WaitActivity extends BaseActivity {
     void getPreIntent() {
         player = ((MyApplication)getApplication()).getPlaytype();
         field = getIntent().getExtras().get("field").toString().trim();
+        num = getIntent().getExtras().get("num").toString().trim();
     }
 
     @Override
@@ -40,16 +32,30 @@ public class WaitActivity extends BaseActivity {
             @Override
             public void run() {
                 String username = ((MyApplication)getApplication()).getUsername();
-                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, "2"));
+                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, num, field, 0));
                 while (!((MyApplication) getApplication()).ifMatched()) {
                     continue;
                 }
-                ((MyApplication) getApplication()).resetIfMatched();
                 Intent intent1 = new Intent(WaitActivity.this, AnswerActivity.class);
                 intent1.putExtra("field", field);
+                intent1.putExtra("num",num);
                 startActivity(intent1);
             }
         };
         thread.start();
     }
+
+    @OnClick({R.id.wait_ret})
+    public void onViewClicked(View v)
+    {
+        switch (v.getId())
+        {
+            case R.id.wait_ret:
+                String username = ((MyApplication)getApplication()).getUsername();
+                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, "2", field, 1));
+                Intent intent = new Intent(WaitActivity.this, MainActivity.class);
+                startActivity(intent);
+        }
+    }
+
 }

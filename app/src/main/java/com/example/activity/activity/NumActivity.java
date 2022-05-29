@@ -16,7 +16,7 @@ public class NumActivity extends BaseActivity {
         return R.layout.activity_num;
     }
 
-    @OnClick({R.id.num_ret, R.id.singleNum, R.id.matchNum})
+    @OnClick({R.id.num_ret, R.id.singleNum, R.id.TwoNum, R.id.ThreeNum, R.id.FourNum})
     public void onViewClicked(View view)
     {
         switch(view.getId())
@@ -27,12 +27,26 @@ public class NumActivity extends BaseActivity {
             case R.id.singleNum:
                 Intent intent2 = new Intent(NumActivity.this,FieldChooseActivity.class);
                 ((MyApplication)getApplication()).setPlaytype("single");
+                intent2.putExtra("num", "1");
                 startActivity(intent2);
                 break;
-            case R.id.matchNum:
+            case R.id.TwoNum:
                 Intent intent3 = new Intent(NumActivity.this,FieldChooseActivity.class);
                 ((MyApplication)getApplication()).setPlaytype("match");
+                intent3.putExtra("num", "2");
                 startActivity(intent3);
+                break;
+            case R.id.ThreeNum:
+                Intent intent4 = new Intent(NumActivity.this,FieldChooseActivity.class);
+                ((MyApplication)getApplication()).setPlaytype("match");
+                intent4.putExtra("num", "3");
+                startActivity(intent4);
+                break;
+            case R.id.FourNum:
+                Intent intent5 = new Intent(NumActivity.this,FieldChooseActivity.class);
+                ((MyApplication)getApplication()).setPlaytype("match");
+                intent5.putExtra("num", "4");
+                startActivity(intent5);
                 break;
         }
     }

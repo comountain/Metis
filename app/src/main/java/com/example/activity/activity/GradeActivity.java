@@ -1,5 +1,7 @@
 package com.example.activity.activity;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.activity.MyApplication;
@@ -10,14 +12,20 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import butterknife.OnClick;
 
 public class GradeActivity extends BaseActivity {
     String grade;
-    String playernum;
+    String playertype;
     boolean ret = false;
 
     @Override
@@ -29,29 +37,42 @@ public class GradeActivity extends BaseActivity {
     @Override
     void getPreIntent()
     {
-        playernum = ((MyApplication)getApplication()).getPlaytype();
+        playertype = ((MyApplication)getApplication()).getPlaytype();
         grade = getIntent().getExtras().get("grade").toString().trim();
     }
 
     @Override
     void initView()
     {
-        if(playernum.equals("match"))
+        if(playertype.equals("match"))
         {
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    while (!ret) {
-                        HashMap<String, String> result = ((MyApplication) getApplication()).getGameresult();
-                        String show = (grade + "分\n");
-                        for (Map.Entry<String, String> entry : result.entrySet())
-                            show += entry.getKey() + "的分数为： " + entry.getValue() + "分\n";
-                        TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
-                        gradeToShow.setText(show);
+            HashMap<String, String> result = ((MyApplication) getApplication()).getGameresult();
+            int num = result.size();
+            int[] score_order = new int[num];
+            String show = "";
+            int i = 0;
+            for (Map.Entry<String, String> entry : result.entrySet())
+            {
+                score_order[i++] = Integer.parseInt(entry.getValue());
+            }
+            Arrays.sort(score_order);
+            int order_now = 1;
+            List<String> if_add = new ArrayList<>();
+            for(i = num - 1; i >= 0; i--)
+            {
+                for (Map.Entry<String, String> entry : result.entrySet())
+                {
+                    if(entry.getValue().equals(score_order[i]+"") && !if_add.contains(entry.getKey()))
+                    {
+                        show += "第" + order_now +"名： " + entry.getKey() + " "+ entry.getValue() +"分\n";
+                        order_now ++;
+                        if_add.add(entry.getKey());
+                        break;
                     }
                 }
-            };
-            thread.start();
+            }
+            TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
+            gradeToShow.setText(show);
         }
         else
         {
@@ -67,7 +88,7 @@ public class GradeActivity extends BaseActivity {
         {
             case R.id.grade_return:
                 ret = true;
-                ((MyApplication)getApplication()).resetGameresult();
+                ((MyApplication)getApplication()).resetClient();
                 Intent intent1 = new Intent(GradeActivity.this,MainActivity.class);
                 startActivity(intent1);
                 break;

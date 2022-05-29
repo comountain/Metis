@@ -2,6 +2,8 @@ package com.example.activity.activity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.KeyEvent;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
@@ -19,6 +21,24 @@ public abstract class BaseActivity extends FragmentActivity{
         initData();
         initListener();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+
 
     abstract int getLayoutId();
 

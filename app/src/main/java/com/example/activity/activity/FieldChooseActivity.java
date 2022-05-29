@@ -15,6 +15,7 @@ import butterknife.OnClick;
 
 public class FieldChooseActivity extends BaseActivity {
     private String matchNum;
+    private String num;
 
     @Override
     int getLayoutId()
@@ -23,7 +24,11 @@ public class FieldChooseActivity extends BaseActivity {
     }
 
     @Override
-    void getPreIntent() {matchNum = ((MyApplication)getApplication()).getPlaytype();}
+    void getPreIntent()
+    {
+        matchNum = ((MyApplication)getApplication()).getPlaytype();
+        num = getIntent().getExtras().get("num").toString().trim();
+    }
 
 
     @OnClick({R.id.field_1,R.id.field_2,R.id.field_3,R.id.field_4,R.id.field_5,R.id.field_6,R.id.field_7,R.id.ret})
@@ -35,6 +40,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent1 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent12 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent1.putExtra("field","Literature");
+                intent1.putExtra("num", num);
                 intent12.putExtra("field","Literature");
                 if(matchNum.equals("match"))
                     startActivity(intent1);
@@ -45,6 +51,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent2 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent22 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent2.putExtra("field","History");
+                intent2.putExtra("num", num);
                 intent22.putExtra("field","History");
                 if(matchNum.equals("match"))
                     startActivity(intent2);
@@ -55,6 +62,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent3 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent32 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent3.putExtra("field","Films");
+                intent3.putExtra("num", num);
                 intent32.putExtra("field","Films");
                 if(matchNum.equals("match"))
                     startActivity(intent3);
@@ -65,6 +73,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent4 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent42 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent4.putExtra("field","Art");
+                intent4.putExtra("num", num);
                 intent42.putExtra("field","Art");
                 if(matchNum.equals("match"))
                     startActivity(intent4);
@@ -75,6 +84,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent5 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent52 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent5.putExtra("field","Geography");
+                intent5.putExtra("num", num);
                 intent52.putExtra("field","Geography");
                 if(matchNum.equals("match"))
                     startActivity(intent5);
@@ -85,6 +95,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent6 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent62 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent6.putExtra("field","Science");
+                intent6.putExtra("num", num);
                 intent62.putExtra("field","Science");
                 if(matchNum.equals("match"))
                     startActivity(intent6);
@@ -95,6 +106,7 @@ public class FieldChooseActivity extends BaseActivity {
                 Intent intent7 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 Intent intent72 = new Intent(FieldChooseActivity.this,WaitActivity.class);
                 intent7.putExtra("field","All");
+                intent7.putExtra("num", num);
                 intent72.putExtra("field","All");
                 if(matchNum.equals("match"))
                     startActivity(intent7);

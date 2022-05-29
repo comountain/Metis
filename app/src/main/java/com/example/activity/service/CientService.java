@@ -1,6 +1,7 @@
 package com.example.activity.service;
 
 
+import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.GamerMessage;
 import com.example.activity.message.MatchMessage;
@@ -20,24 +21,15 @@ import io.netty.handler.codec.string.StringEncoder;
 
 public class CientService {
     private String user;
-    private int competeNum = 0;
     private SocketChannel channel;
     private String[] playername = null;
-    private HashMap<String, String> gameresult = new HashMap<>();
+    private HashMap<String, String> gamerscore = new HashMap<>();
+    private HashMap<String, Boolean> if_renew = new HashMap<>();
     boolean ifMatched = false;
-
-
-    public boolean isIfMatched() {
-        return ifMatched;
-    }
-
-    public HashMap<String, String> getGameresult()
-    {
-        return gameresult;
-    }
 
     public void start()
     {
+        gamerscore.put(user, "0");
         NioEventLoopGroup group = new NioEventLoopGroup();
         try{
             Bootstrap bootstrap = new Bootstrap();
@@ -59,31 +51,72 @@ public class CientService {
                         public void channelRead(ChannelHandlerContext ctx, Object msg){
                             String retmes = (String) msg;
                             String[] news = retmes.split("_");
+                            int size = news.length;
                             switch (news[0])
                             {
                                 case "1":
                                     break;
                                 case "2":
-                                    playername = new String[2];
-                                    playername[0] = news[1];
-                                    playername[1] = news[2];
+                                    playername = new String[size - 1];
+                                    for(int i = 0; i < size - 1; i++)
+                                    {
+                                        playername[i] = news[i + 1];
+                                        gamerscore.put(news[i + 1], "0");
+                                    }
                                     ifMatched = true;
                                     break;
                                 case "3":
+                                    if_renew.put(news[1], true);
                                     if(news[1] != user)
-                                        gameresult.put(news[1],news[2]);
+                                    {
+                                        gamerscore.put(news[1],news[2]);
+                                    }
                                     break;
                             }
                         }
                     });
                 }
             });
-            ChannelFuture future =bootstrap.connect("192.168.1.106",8888).sync();
+            ChannelFuture future =bootstrap.connect("192.168.0.56",8888).sync();
             channel = (SocketChannel) future.channel();
 
         } catch (Exception e){
             group.shutdownGracefully();
         }
+    }
+
+    public int getSubnow()
+    {
+        return if_renew.size();
+    }
+
+    public boolean isIfMatched() {
+        return ifMatched;
+    }
+
+    public HashMap<String, String> getGameresult()
+    {
+       return gamerscore;
+    }
+
+    public String[] getPlayername()
+    {
+        if(playername == null)
+        {
+            playername = new String[1];
+            playername[0] = user;
+        }
+        return playername;
+    }
+
+    public void resetSubnow()
+    {
+        if_renew.clear();
+    }
+
+    public void setScore(String score)
+    {
+        gamerscore.put(user, score);
     }
 
     public void sendMessage(GamerMessage mes)
@@ -104,6 +137,12 @@ public class CientService {
         channel.writeAndFlush(msg);
     }
 
+    public void sendMessage(AnswerMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
     public void resetPlayername()
     {
         playername = null;
@@ -111,21 +150,18 @@ public class CientService {
 
     public void resetGameresult()
     {
-        gameresult = new HashMap<String, String>();
+        gamerscore = new HashMap<String, String>();
+        gamerscore.put(user, "0");
     }
     public void resetIfMatched()
     {
         ifMatched = false;
     }
 
-    public void setCompeteNum(int num)
-    {
-        competeNum = num;
-    }
-
     public void setUser(String name)
     {
         user = name;
     }
+
 }
 

@@ -27,17 +27,37 @@
             android:layout_height="78dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp"
-            android:text="单人模式"
+            android:text="练习模式"
             android:textSize="25sp"
             android:visibility="visible" />
 
         <Button
-            android:id="@+id/matchNum"
+            android:id="@+id/TwoNum"
             android:layout_width="264dp"
             android:layout_height="78dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="0dp"
-            android:text="匹配模式"
+            android:text="单挑模式"
+            android:textSize="25sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/ThreeNum"
+            android:layout_width="264dp"
+            android:layout_height="78dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
+            android:text="三人模式"
+            android:textSize="25sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/FourNum"
+            android:layout_width="264dp"
+            android:layout_height="78dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
+            android:text="四人模式"
             android:textSize="25sp"
             android:visibility="visible" />
 

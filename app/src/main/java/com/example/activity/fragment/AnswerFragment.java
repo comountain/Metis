@@ -6,17 +6,21 @@ import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.activity.MyApplication;
 import com.example.activity.R;
 
 import com.example.activity.bean.QuestBean;
 import com.example.activity.utils.LogUtils;
 import com.example.activity.service.FragmentCallBack;
+
+import java.util.HashMap;
 
 public class AnswerFragment extends BaseFragment {
     public interface MyListener{
