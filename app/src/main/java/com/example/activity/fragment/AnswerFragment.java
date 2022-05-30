@@ -34,6 +34,7 @@ public class AnswerFragment extends BaseFragment {
     private Button chooseC;
     private Button chooseD;
     private TextView tv_title;
+    private HashMap<String, Boolean> multihelper = new HashMap<>();
     private String myanswer = "";
     volatile QuestBean questBean = null;
     FragmentCallBack mfragmentCallBack;
@@ -55,7 +56,7 @@ public class AnswerFragment extends BaseFragment {
         chooseA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!"multi".equals(questBean.getQ_type()))
+                if(!"Mult".equals(questBean.getQ_type()))
                     check(view);
                 else
                     checkmore(view);
@@ -64,19 +65,28 @@ public class AnswerFragment extends BaseFragment {
         chooseB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                check(view);
+                if(!"Mult".equals(questBean.getQ_type()))
+                    check(view);
+                else
+                    checkmore(view);
             }
         });
         chooseC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                check(view);
+                if(!"Mult".equals(questBean.getQ_type()))
+                    check(view);
+                else
+                    checkmore(view);
             }
         });
         chooseD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                check(view);
+                if(!"Mult".equals(questBean.getQ_type()))
+                    check(view);
+                else
+                    checkmore(view);
             }
         });
         return view;
@@ -128,25 +138,153 @@ public class AnswerFragment extends BaseFragment {
         switch (v.getId())
         {
             case R.id.chooseA:
-                if(!myanswer.contains("A"))
-                    myanswer = myanswer + "A";
+                if(!multihelper.containsKey("A") || !multihelper.get("A"))
+                    multihelper.put("A",true);
+                else
+                    multihelper.put("A", false);
+                myanswer = "";
+                for(int i = 0; i < 4; i++)
+                {
+                    switch (i){
+                        case 0:
+                            if(multihelper.containsKey("A") && multihelper.get("A") == true)
+                                myanswer = myanswer + "A";
+                            break;
+                        case 1:
+                            if(multihelper.containsKey("B") && multihelper.get("B") == true)
+                                myanswer = myanswer + "B";
+                            break;
+                        case 2:
+                            if(multihelper.containsKey("C") && multihelper.get("C") == true)
+                                myanswer = myanswer + "C";
+                            break;
+                        case 3:
+                            if(multihelper.containsKey("D") && multihelper.get("D") == true)
+                                myanswer = myanswer + "D";
+                    }
+                }
                 questBean.setMyanswer(myanswer);
+                mfragmentCallBack.sendAnswer(myanswer);
                 break;
             case R.id.chooseB:
-                if(!myanswer.contains("B"))
-                    myanswer = myanswer + "B";
+                if(!multihelper.containsKey("B") || !multihelper.get("B"))
+                    multihelper.put("B",true);
+                else
+                    multihelper.put("B", false);
+                myanswer = "";
+                for(int i = 0; i < 4; i++)
+                {
+                    switch (i){
+                        case 0:
+                            if(multihelper.containsKey("A") && multihelper.get("A") == true)
+                                myanswer = myanswer + "A";
+                            break;
+                        case 1:
+                            if(multihelper.containsKey("B") && multihelper.get("B") == true)
+                                myanswer = myanswer + "B";
+                            break;
+                        case 2:
+                            if(multihelper.containsKey("C") && multihelper.get("C") == true)
+                                myanswer = myanswer + "C";
+                            break;
+                        case 3:
+                            if(multihelper.containsKey("D") && multihelper.get("D") == true)
+                                myanswer = myanswer + "D";
+                    }
+                }
                 questBean.setMyanswer(myanswer);
+                mfragmentCallBack.sendAnswer(myanswer);
                 break;
             case R.id.chooseC:
-                if(!myanswer.contains("C"))
-                    myanswer = myanswer + "C";
+                if(!multihelper.containsKey("C") || !multihelper.get("C"))
+                    multihelper.put("C",true);
+                else
+                    multihelper.put("C", false);
+                myanswer = "";
+                for(int i = 0; i < 4; i++)
+                {
+                    switch (i){
+                        case 0:
+                            if(multihelper.containsKey("A") && multihelper.get("A") == true)
+                                myanswer = myanswer + "A";
+                            break;
+                        case 1:
+                            if(multihelper.containsKey("B") && multihelper.get("B") == true)
+                                myanswer = myanswer + "B";
+                            break;
+                        case 2:
+                            if(multihelper.containsKey("C") && multihelper.get("C") == true)
+                                myanswer = myanswer + "C";
+                            break;
+                        case 3:
+                            if(multihelper.containsKey("D") && multihelper.get("D") == true)
+                                myanswer = myanswer + "D";
+                    }
+                }
                 questBean.setMyanswer(myanswer);
+                mfragmentCallBack.sendAnswer(myanswer);
                 break;
             case R.id.chooseD:
-                if(!myanswer.contains("D"))
-                    myanswer = myanswer + "D";
+                if(!multihelper.containsKey("D") || !multihelper.get("D"))
+                    multihelper.put("D",true);
+                else
+                    multihelper.put("D", false);
+                myanswer = "";
+                for(int i = 0; i < 4; i++)
+                {
+                    switch (i){
+                        case 0:
+                            if(multihelper.containsKey("A") && multihelper.get("A") == true)
+                                myanswer = myanswer + "A";
+                            break;
+                        case 1:
+                            if(multihelper.containsKey("B") && multihelper.get("B") == true)
+                                myanswer = myanswer + "B";
+                            break;
+                        case 2:
+                            if(multihelper.containsKey("C") && multihelper.get("C") == true)
+                                myanswer = myanswer + "C";
+                            break;
+                        case 3:
+                            if(multihelper.containsKey("D") && multihelper.get("D") == true)
+                                myanswer = myanswer + "D";
+                    }
+                }
                 questBean.setMyanswer(myanswer);
-                break;
+                mfragmentCallBack.sendAnswer(myanswer);
+        }
+        clearButton();
+        for(int i = 0; i < 4; i++)
+        {
+            switch (i){
+                case 0:
+                    if(multihelper.containsKey("A") && multihelper.get("A") == true)
+                    {
+                        drawable = getResources().getDrawable(R.drawable.shape_pressed);
+                        chooseA.setBackground(drawable);
+                    }
+                    break;
+                case 1:
+                    if(multihelper.containsKey("B") && multihelper.get("B") == true)
+                    {
+                        drawable = getResources().getDrawable(R.drawable.shape_pressed);
+                        chooseB.setBackground(drawable);
+                    }
+                    break;
+                case 2:
+                    if(multihelper.containsKey("C") && multihelper.get("C") == true)
+                    {
+                        drawable = getResources().getDrawable(R.drawable.shape_pressed);
+                        chooseC.setBackground(drawable);
+                    }
+                    break;
+                case 3:
+                    if(multihelper.containsKey("D") && multihelper.get("D") == true)
+                    {
+                        drawable = getResources().getDrawable(R.drawable.shape_pressed);
+                        chooseD.setBackground(drawable);
+                    }
+            }
         }
     }
 
@@ -159,7 +297,7 @@ public class AnswerFragment extends BaseFragment {
             return;
         }
 
-        if ("single".equals(questBean.getQ_type()) || "multi".equals(questBean.getQ_type())) {
+        if ("single".equals(questBean.getQ_type()) || "Mult".equals(questBean.getQ_type())) {
             chooseA.setText("" + questBean.getOptionA());
             chooseB.setText("" + questBean.getOptionB());
             chooseC.setText("" + questBean.getOptionC());
@@ -168,8 +306,8 @@ public class AnswerFragment extends BaseFragment {
 
         else if ("judge".equals(questBean.getQ_type())) {
             chooseA.setText("对");
-            chooseC.setText("错");
-            chooseB.setVisibility(View.GONE);
+            chooseB.setText("错");
+            chooseC.setVisibility(View.GONE);
             chooseD.setVisibility(View.GONE);
         }
 

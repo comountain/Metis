@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Timer;
 import java.util.logging.Handler;
 
@@ -62,6 +63,7 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
     private String myanswer = "null";
     private String playertype;
     private String[] playername;
+    private int wrapper_order=0;
     private int playernum;
     private int myscore = 0;
     private int second = 20;
@@ -86,6 +88,13 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         playername = ((MyApplication)getApplication()).getPlayername();
         playernum = Integer.parseInt(getIntent().getExtras().get("num").toString().trim());
         field = getIntent().getExtras().get("field").toString().trim();
+        if(playertype.equals("match"))
+            wrapper_order = ((MyApplication)getApplication()).getWrapperOrder();
+        else
+        {
+            Random random = new Random();
+            wrapper_order = random.nextInt(config.maxWrapperSize);
+        }
         score = new TextView[4];
         name = new TextView[4];
         player = new ImageView[4];
@@ -174,7 +183,6 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
 
 
     private void setChronometer() {
-        chronometer.setText(nowtime());
         chronometer.start();
         chronometer.setOnChronometerTickListener(this);
     }
@@ -197,7 +205,7 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
                     public void run()
                     {
                         try {
-                            Thread.sleep(5000);
+                            Thread.sleep(2000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -228,14 +236,6 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         }
     }
 
-    private String nowtime()
-    {
-        if (second < 10) {
-            return ("最后" + second + "秒");
-        } else {
-            return ("" + second);
-        }
-    }
 
     private void initNet(String field)
     {
@@ -246,11 +246,9 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("获取题目中...");
         progressDialog.show();
-        Button btn = (Button)findViewById(R.id._btn_message);
-        String url = config.HOST;
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        params.put("type","single");
+        params.put("order",wrapper_order);
         params.put("field",field);
         client.get(config.URL_GET_QUESTION,params, new JsonHttpResponseHandler() {
                     @Override
@@ -327,11 +325,18 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
                     else_score = 5;
                 if(myanswer == "null")
                 {
+                    ifSub = false;
+                    subm.setText("提交答案");
                     return;
                 }
                 if(myanswer.equals(message.get(nowpager).getAnswer()))
                 {
-                    myscore += 20 + else_score;
+                    int base_score = 15;
+                    if(nowpager >= 2)
+                        base_score += 5;
+                    if(nowpager == 6)
+                        base_score += 10;
+                    myscore += base_score + else_score;
                 }
                 else
                 {
@@ -351,6 +356,9 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
                 if(!playertype.equals("match"))
                 {
                     vp_answer.setCurrentItem(++nowpager);
+                    second = 20;
+                    ifSub = false;
+                    subm.setText("提交答案");
                     renew(((MyApplication)getApplication()).getGameresult());
                 }
                 else

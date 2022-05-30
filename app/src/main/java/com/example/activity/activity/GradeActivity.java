@@ -57,6 +57,7 @@ public class GradeActivity extends BaseActivity {
             }
             Arrays.sort(score_order);
             int order_now = 1;
+            String champion="";
             List<String> if_add = new ArrayList<>();
             for(i = num - 1; i >= 0; i--)
             {
@@ -64,6 +65,8 @@ public class GradeActivity extends BaseActivity {
                 {
                     if(entry.getValue().equals(score_order[i]+"") && !if_add.contains(entry.getKey()))
                     {
+                        if(order_now == 1)
+                            champion = entry.getKey();
                         show += "第" + order_now +"名： " + entry.getKey() + " "+ entry.getValue() +"分\n";
                         order_now ++;
                         if_add.add(entry.getKey());
@@ -71,6 +74,13 @@ public class GradeActivity extends BaseActivity {
                     }
                 }
             }
+            TextView championToShow = (TextView) findViewById(R.id.grade_title);
+            if(!((MyApplication)getApplication()).getUsername().equals(champion))
+            {
+                championToShow.setText("可惜，再加油吧..");
+            }
+            else
+                championToShow.setText("恭喜！你击败了所有人！");
             TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
             gradeToShow.setText(show);
         }

@@ -26,6 +26,7 @@ public class CientService {
     private HashMap<String, String> gamerscore = new HashMap<>();
     private HashMap<String, Boolean> if_renew = new HashMap<>();
     boolean ifMatched = false;
+    public int wrapper_order = -1;
 
     public void start()
     {
@@ -57,11 +58,12 @@ public class CientService {
                                 case "1":
                                     break;
                                 case "2":
-                                    playername = new String[size - 1];
-                                    for(int i = 0; i < size - 1; i++)
+                                    wrapper_order = Integer.parseInt(news[1]);
+                                    playername = new String[size - 2];
+                                    for(int i = 0; i < size - 2; i++)
                                     {
-                                        playername[i] = news[i + 1];
-                                        gamerscore.put(news[i + 1], "0");
+                                        playername[i] = news[i + 2];
+                                        gamerscore.put(news[i + 2], "0");
                                     }
                                     ifMatched = true;
                                     break;
@@ -77,7 +79,7 @@ public class CientService {
                     });
                 }
             });
-            ChannelFuture future =bootstrap.connect("192.168.0.56",8888).sync();
+            ChannelFuture future =bootstrap.connect("192.168.0.103",8888).sync();
             channel = (SocketChannel) future.channel();
 
         } catch (Exception e){

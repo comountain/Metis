@@ -11,7 +11,7 @@ import com.example.activity.bean.User;
 import java.util.HashMap;
 
 public class MyApplication extends Application {
-    public User user = new User(5,2,"0001","Co");
+    public User user = new User(5,2,"0001","Fa");
     public String playtype;
     CientService cientService = new CientService();
     @Override
@@ -27,6 +27,8 @@ public class MyApplication extends Application {
     {
         playtype = ty;
     }
+
+    public int getWrapperOrder(){return cientService.wrapper_order;}
 
     public String getPlaytype()
     {
@@ -49,6 +51,11 @@ public class MyApplication extends Application {
         cientService.resetGameresult();
         cientService.resetPlayername();
         cientService.resetIfMatched();
+    }
+
+    public void resetWrapperOrder()
+    {
+        cientService.wrapper_order = -1;
     }
 
     public void setScore(String score)

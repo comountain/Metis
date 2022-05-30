@@ -42,6 +42,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent1.putExtra("field","Literature");
                 intent1.putExtra("num", num);
                 intent12.putExtra("field","Literature");
+                intent12.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent1);
                 else
@@ -53,6 +54,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent2.putExtra("field","History");
                 intent2.putExtra("num", num);
                 intent22.putExtra("field","History");
+                intent22.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent2);
                 else
@@ -64,6 +66,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent3.putExtra("field","Films");
                 intent3.putExtra("num", num);
                 intent32.putExtra("field","Films");
+                intent32.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent3);
                 else
@@ -75,6 +78,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent4.putExtra("field","Art");
                 intent4.putExtra("num", num);
                 intent42.putExtra("field","Art");
+                intent42.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent4);
                 else
@@ -86,6 +90,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent5.putExtra("field","Geography");
                 intent5.putExtra("num", num);
                 intent52.putExtra("field","Geography");
+                intent52.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent5);
                 else
@@ -97,6 +102,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent6.putExtra("field","Science");
                 intent6.putExtra("num", num);
                 intent62.putExtra("field","Science");
+                intent62.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent6);
                 else
@@ -108,6 +114,7 @@ public class FieldChooseActivity extends BaseActivity {
                 intent7.putExtra("field","All");
                 intent7.putExtra("num", num);
                 intent72.putExtra("field","All");
+                intent72.putExtra("num", num);
                 if(matchNum.equals("match"))
                     startActivity(intent7);
                 else

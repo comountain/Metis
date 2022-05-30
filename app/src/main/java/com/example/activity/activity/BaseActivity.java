@@ -13,7 +13,7 @@ public abstract class BaseActivity extends FragmentActivity{
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         getPreIntent();

@@ -23,17 +23,17 @@
             android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="本次竞赛冠军为："
+            android:text="练习成绩为："
             android:textColor="@color/purple_700"
             android:textSize="25sp" />
 
         <TextView
             android:id="@+id/grade_grade"
-            android:layout_width="600px"
+            android:layout_width="318dp"
             android:layout_height="600px"
             android:layout_gravity="center_horizontal"
             android:text="TextView"
-            android:textSize="25sp"/>
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/grade_return"
