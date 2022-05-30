@@ -2,6 +2,7 @@ package com.example.activity;
 
 import android.app.Application;
 
+import com.example.activity.bean.QuestBean;
 import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.MatchMessage;
@@ -9,9 +10,10 @@ import com.example.activity.service.CientService;
 import com.example.activity.message.GamerMessage;
 import com.example.activity.bean.User;
 import java.util.HashMap;
+import java.util.List;
 
 public class MyApplication extends Application {
-    public User user = new User(5,2,"0001","Fa");
+    public User user = new User(5,2,"0001","Comountain");
     public String playtype;
     CientService cientService = new CientService();
     @Override
@@ -42,7 +44,13 @@ public class MyApplication extends Application {
 
     public String[] getPlayername(){return cientService.getPlayername();}
 
+    public List<String> getWrong(){return cientService.getWrong_quest();}
+
     public int getSubNow(){return cientService.getSubnow();}
+
+    public void addWrong(String q){cientService.addWrong(q);}
+
+    public void resetWrong(){cientService.resetWrong();}
 
     public void restSubNow(){cientService.resetSubnow();}
 

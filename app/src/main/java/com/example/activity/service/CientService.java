@@ -1,12 +1,15 @@
 package com.example.activity.service;
 
 
+import com.example.activity.bean.QuestBean;
 import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.GamerMessage;
 import com.example.activity.message.MatchMessage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -25,6 +28,7 @@ public class CientService {
     private String[] playername = null;
     private HashMap<String, String> gamerscore = new HashMap<>();
     private HashMap<String, Boolean> if_renew = new HashMap<>();
+    private List<String> wrong_quest = new ArrayList<>();
     boolean ifMatched = false;
     public int wrapper_order = -1;
 
@@ -101,6 +105,8 @@ public class CientService {
        return gamerscore;
     }
 
+    public List<String> getWrong_quest(){return wrong_quest;}
+
     public String[] getPlayername()
     {
         if(playername == null)
@@ -110,6 +116,10 @@ public class CientService {
         }
         return playername;
     }
+
+    public void addWrong(String wrong){wrong_quest.add(wrong);}
+
+    public void resetWrong(){wrong_quest.clear();}
 
     public void resetSubnow()
     {

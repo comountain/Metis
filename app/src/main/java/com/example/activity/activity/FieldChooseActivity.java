@@ -110,7 +110,7 @@ public class FieldChooseActivity extends BaseActivity {
                 break;
             case R.id.field_7:
                 Intent intent7 = new Intent(FieldChooseActivity.this,WaitActivity.class);
-                Intent intent72 = new Intent(FieldChooseActivity.this,WaitActivity.class);
+                Intent intent72 = new Intent(FieldChooseActivity.this,AnswerActivity.class);
                 intent7.putExtra("field","All");
                 intent7.putExtra("num", num);
                 intent72.putExtra("field","All");

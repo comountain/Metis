@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.activity.MyApplication;
 import com.example.activity.R;
+import com.example.activity.bean.QuestBean;
 
 import android.os.Bundle;
 import android.view.View;
@@ -86,8 +87,20 @@ public class GradeActivity extends BaseActivity {
         }
         else
         {
+            TextView titleToShow = (TextView) findViewById(R.id.grade_title);
+            String title = "本次练习得分： " + grade;
+            titleToShow.setText(title);
             TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
-            gradeToShow.setText(grade + "分\n");
+            gradeToShow.setTextSize(12);
+            String wrong_all = "";
+                for(int i = 0; i < ((MyApplication)getApplication()).getWrong().size(); i++)
+                {
+                    String q = ((MyApplication)getApplication()).getWrong().get(i);
+                    wrong_all = wrong_all + q + "\n";
+
+                }
+            ((MyApplication)getApplication()).resetWrong();
+                gradeToShow.setText(wrong_all);
         }
     }
 

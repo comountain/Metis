@@ -341,6 +341,17 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
                 else
                 {
                     myscore -= 10;
+                    Button b = (Button) findViewById(R.id._btn_tool);
+                    if(!playertype.equals("match"))
+                    {
+                        String wrong_all = "";
+                        QuestBean q = message.get(nowpager);
+                        wrong_all = wrong_all + q.getTitle() + "\n";
+                        if(!q.getQ_type().equals("judge"))
+                            wrong_all = wrong_all + "A：" + q.getOptionA() + " B: " + q.getOptionB() + " C: " + q.getOptionC() + " D: " + q.getOptionD() + "\n";
+                        wrong_all = wrong_all + "你的回答是： " + q.getMyanswer() + " 正确答案是： " + q.getAnswer() + "\n";
+                        ((MyApplication)getApplication()).addWrong(wrong_all);
+                    }
                 }
                 myanswer = "null";
                 if(nowpager == fragmentList.size() - 1) {

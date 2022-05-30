@@ -8,6 +8,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="345dp"
         android:layout_height="650dp"
         android:layout_gravity="center_horizontal"
@@ -45,8 +46,12 @@
         android:layout_height="50dp"
         android:background="#F16C4D"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="681dp">
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <Button
             android:id="@+id/main_to_main"
@@ -78,7 +83,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:gravity="center"
-            android:text="发现"/>
+            android:text="发现" />
 
         <Button
             android:id="@+id/main_to_mess"

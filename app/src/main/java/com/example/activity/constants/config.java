@@ -1,5 +1,7 @@
 package com.example.activity.constants;
 
+import java.util.List;
+
 public class config {
     //是否开启调试模式
     public static final int maxWrapperSize = 4;
@@ -20,4 +22,5 @@ public class config {
     //    获取试卷题目网址
     public static final String URL_DEBUG = HOST + "debug";
     public static final String URL_UP_USER_GRADE = HOST + "UpUserGrade";
+
 }

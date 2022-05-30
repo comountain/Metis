@@ -23,7 +23,7 @@
             android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="考题"
-            android:textSize="20sp" />
+            android:textSize="13sp" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
