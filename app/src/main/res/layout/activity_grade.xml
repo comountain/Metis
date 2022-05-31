@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:text="练习成绩为："
             android:textColor="@color/purple_700"
-            android:textSize="25sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/grade_grade"
@@ -33,7 +33,7 @@
             android:layout_height="577dp"
             android:layout_gravity="center_horizontal"
             android:text="TextView"
-            android:textSize="25sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/grade_return"

@@ -31,15 +31,22 @@ public class WaitActivity extends BaseActivity {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                String username = ((MyApplication)getApplication()).getUsername();
-                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, num, field, 0));
-                while (!((MyApplication) getApplication()).ifMatched()) {
-                    continue;
+                try {
+                    String username = ((MyApplication) getApplication()).getNickname();
+
+                    ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, num, field, 0));
+                    while (!((MyApplication) getApplication()).ifMatched()) {
+                        continue;
+                    }
+                    Intent intent1 = new Intent(WaitActivity.this, AnswerActivity.class);
+                    intent1.putExtra("field", field);
+                    intent1.putExtra("num", num);
+                    startActivity(intent1);
                 }
-                Intent intent1 = new Intent(WaitActivity.this, AnswerActivity.class);
-                intent1.putExtra("field", field);
-                intent1.putExtra("num",num);
-                startActivity(intent1);
+                catch (Exception e)
+                {
+                    Thread.interrupted();
+                }
             }
         };
         thread.start();
@@ -51,7 +58,7 @@ public class WaitActivity extends BaseActivity {
         switch (v.getId())
         {
             case R.id.wait_ret:
-                String username = ((MyApplication)getApplication()).getUsername();
+                String username = ((MyApplication)getApplication()).getNickname();
                 ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, "2", field, 1));
                 Intent intent = new Intent(WaitActivity.this, MainActivity.class);
                 startActivity(intent);

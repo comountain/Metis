@@ -83,7 +83,7 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
     @Override
     void getPreIntent()
     {
-        username = ((MyApplication)getApplication()).getUsername();
+        username = ((MyApplication)getApplication()).getNickname();
         playertype = ((MyApplication)getApplication()).getPlaytype();
         playername = ((MyApplication)getApplication()).getPlayername();
         playernum = Integer.parseInt(getIntent().getExtras().get("num").toString().trim());

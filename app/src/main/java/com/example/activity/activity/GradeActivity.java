@@ -1,30 +1,26 @@
 package com.example.activity.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.activity.MyApplication;
 import com.example.activity.R;
-import com.example.activity.bean.QuestBean;
-
-import android.os.Bundle;
+import com.example.activity.constants.config;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import android.view.View;
 import android.content.Intent;
 import android.widget.TextView;
-
+import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 
 public class GradeActivity extends BaseActivity {
+    int change = 0;
     String grade;
     String playertype;
     boolean ret = false;
@@ -76,19 +72,26 @@ public class GradeActivity extends BaseActivity {
                 }
             }
             TextView championToShow = (TextView) findViewById(R.id.grade_title);
-            if(!((MyApplication)getApplication()).getUsername().equals(champion))
+            if(!((MyApplication)getApplication()).getNickname().equals(champion))
             {
-                championToShow.setText("可惜，再加油吧..");
+                change = -5;
+                championToShow.setText("可惜，再加油吧.. 积分"+change);
             }
-            else
-                championToShow.setText("恭喜！你击败了所有人！");
+            else {
+                change = 10;
+                championToShow.setText("恭喜！你击败了所有人！积分 +"+change);
+            }
             TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
             gradeToShow.setText(show);
         }
         else
         {
+            if(Integer.parseInt(grade) > 130)
+                change = 5;
             TextView titleToShow = (TextView) findViewById(R.id.grade_title);
             String title = "本次练习得分： " + grade;
+            if(change == 5)
+                title = title + "积分 +5";
             titleToShow.setText(title);
             TextView gradeToShow = (TextView) findViewById(R.id.grade_grade);
             gradeToShow.setTextSize(12);
@@ -102,6 +105,27 @@ public class GradeActivity extends BaseActivity {
             ((MyApplication)getApplication()).resetWrong();
                 gradeToShow.setText(wrong_all);
         }
+        if(Integer.parseInt(((MyApplication)getApplication()).getGame_score()) + change < 0)
+            ((MyApplication)getApplication()).setGame_score("0");
+        else
+            ((MyApplication)getApplication()).setGame_score(Integer.parseInt(((MyApplication)getApplication()).getGame_score()) + change+"");
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("username",((MyApplication)getApplication()).getAccount());
+        params.put("change",change);
+        client.get(config.URL_UPDATE_SCORE,params, new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                        super.onSuccess(statusCode, headers, response);
+
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                    }
+                }
+        );
     }
 
     @OnClick({R.id.grade_return})

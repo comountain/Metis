@@ -4,13 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
-    >
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_mainshower"
+        android:layout_width="745dp"
+        android:layout_height="70dp"
+        android:background="#F16C4D"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-1dp">
+
+        <TextView
+            android:id="@+id/main_mine"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="10sp"
+            android:text="nickname"
+            android:textSize="15sp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="345dp"
-        android:layout_height="650dp"
+        android:layout_height="550dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="80dp"
@@ -18,11 +37,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageButton
+            android:id="@+id/main_to_market"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="275dp"
+            android:background="@drawable/market" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="275dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="集市" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"
             android:layout_height="350dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="0dp"
             android:src="@drawable/back_main"
             tools:layout_editor_absoluteX="55dp"
             tools:layout_editor_absoluteY="113dp" />
@@ -32,12 +68,14 @@
             android:layout_width="175dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="0dp"
             android:background="#00000000"
             android:text="开始游戏"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:visibility="visible" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -49,8 +87,9 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_mainshower"
         app:layout_constraintVertical_bias="1.0">
 
         <Button
@@ -60,7 +99,7 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="#00000000"
-
+            android:textColor="@color/white"
             android:gravity="center"
             android:text="主页" />
 

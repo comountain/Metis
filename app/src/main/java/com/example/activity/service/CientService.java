@@ -5,6 +5,8 @@ import com.example.activity.bean.QuestBean;
 import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.GamerMessage;
+import com.example.activity.message.LeaveMessage;
+import com.example.activity.message.LogMessage;
 import com.example.activity.message.MatchMessage;
 
 import java.util.ArrayList;
@@ -83,7 +85,7 @@ public class CientService {
                     });
                 }
             });
-            ChannelFuture future =bootstrap.connect("192.168.0.103",8888).sync();
+            ChannelFuture future =bootstrap.connect("192.168.0.104",8888).sync();
             channel = (SocketChannel) future.channel();
 
         } catch (Exception e){
@@ -150,6 +152,18 @@ public class CientService {
     }
 
     public void sendMessage(AnswerMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void senMessage(LeaveMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(LogMessage mes)
     {
         String msg = mes.MessageString();
         channel.writeAndFlush(msg);

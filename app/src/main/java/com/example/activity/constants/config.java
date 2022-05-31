@@ -9,11 +9,14 @@ public class config {
     public static final boolean DEBUG = true;
     //    Log 打印的 tag
     public static final String LogTag = "metis";
-
     //    主机 host
-    public static final String HOST = "http://192.168.0.103:8081/";
+    public static final String HOST = "http://192.168.0.104:8081/";
     //    登录网址
     public static final String URL_LOGIN = HOST + "LogLet";
+    //    账号信息
+    public static final String URL_GET_INFO=HOST + "getInfo";
+    public static final String URL_UPDATE_INFO=HOST + "updateInfo";
+    public static final String URL_UPDATE_SCORE = HOST + "updateScore";
     //    注册网址
     public static final String URL_SIGNUP = HOST + "RegLet";
     //    获取问题网址

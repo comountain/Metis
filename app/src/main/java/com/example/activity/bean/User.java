@@ -1,19 +1,36 @@
 package com.example.activity.bean;
 
+import java.util.Date;
+import java.util.HashMap;
+
+
 public class User {
-    private int userid = 1;
+    private int userid ;
     private String username;
-    private int image_id = 1;
+    private int image_id ;
     private int game_score;
     private String nickname;
+    private HashMap<String, Date> tools;
 
-    public User(int id, int game_score, String username, String nickname)
+    public User(int id, int game_score,int image_id, String username, String nickname)
     {
         this.userid = id;
+        this.image_id = image_id;
         this.game_score = game_score;
         this.username = username;
         this.nickname = nickname;
     }
+
+    public int getId()
+    {
+        return userid;
+    }
+
+    public Boolean if_have_tool(String s){return tools.containsKey(s);}
+
+    public void remove_tool(String s){tools.remove(s);}
+
+    public void add_tool(String s){tools.put(s,new Date());}
 
     public int getGame_score() {
         return game_score;

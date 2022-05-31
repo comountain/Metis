@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class AnswerMessage {
-    private String type = "4";
+    private String type = "101010";
     private String name;
     private String score;
 
