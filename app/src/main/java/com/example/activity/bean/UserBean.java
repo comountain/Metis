@@ -6,7 +6,7 @@ public class UserBean {
     private String Username;
     private int image_id=1;
     private int game_score;
-    private int game_money;
+    private String password;
     private String nickname;
 
     public UserBean(int id,int game_score,String username,String nickname){
@@ -15,6 +15,16 @@ public class UserBean {
         this.Username=username;
         this.nickname=nickname;
     }
+
+    public UserBean(int id,String account,String password,String nickname,String img,int rank){
+        this.userid=id;
+        this.Username=account;
+        this.password=password;
+        this.nickname=nickname;
+        this.image_id = Integer.parseInt(img);
+        this.game_score=rank;
+    }
+
 
     public int getGame_score() {
         return game_score;

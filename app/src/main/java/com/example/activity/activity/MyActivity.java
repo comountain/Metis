@@ -75,12 +75,16 @@ public class MyActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.mess_to_home:
+                Intent intent2 = new Intent(MyActivity.this, CreateRoomActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.mess_to_main:
                 Intent intent1 = new Intent(MyActivity.this, MainActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.mess_to_mine:
+                Intent intent3 = new Intent(MyActivity.this, FriendActivity.class);
+                startActivity(intent3);
                 break;
         }
     }

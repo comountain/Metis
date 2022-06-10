@@ -23,12 +23,47 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.RoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.FriendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CreateRoomActivity"
+            android:exported="false"
+            android:label="@string/title_activity_create_room"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".activity.lsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.MyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WaitActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.NumActivity"
             android:exported="false"
             android:label="@string/title_activity_num"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".activity.WaitActivity"
+            android:name=".activity.MarketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.InfoActivity"
             android:exported="false" />
         <activity
             android:name=".activity.GradeActivity"
@@ -44,13 +79,7 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,16 +1,24 @@
 package com.example.activity;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.example.activity.bean.QuestBean;
+import com.example.activity.message.AcceptMessage;
 import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
+import com.example.activity.message.CreateRoomMessage;
+import com.example.activity.message.DeleteRoomMessage;
+import com.example.activity.message.InviteMessage;
 import com.example.activity.message.LeaveMessage;
 import com.example.activity.message.LogMessage;
 import com.example.activity.message.MatchMessage;
+import com.example.activity.message.RoomStartMessage;
 import com.example.activity.service.CientService;
 import com.example.activity.message.GamerMessage;
 import com.example.activity.bean.User;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,10 +29,43 @@ public class MyApplication extends Application {
     public String game_score;
     public String playtype;
     CientService cientService = new CientService();
+    private List<Activity> oList;
+
+    public String caonima(){return cientService.caonima();}
+
     @Override
     public void onCreate()
     {
         super.onCreate();
+        oList = new ArrayList<Activity>();
+    }
+
+    public void addActivity_(Activity activity) {
+// 判断当前集合中不存在该Activity
+        if (!oList.contains(activity)) {
+            oList.add(activity);//把当前Activity添加到集合中
+        }
+    }
+
+    /**
+     * 销毁单个Activity
+     */
+    public void removeActivity_(Activity activity) {
+//判断当前集合中存在该Activity
+        if (oList.contains(activity)) {
+            oList.remove(activity);//从集合中移除
+            activity.finish();//销毁当前Activity
+        }
+    }
+
+    /**
+     * 销毁所有的Activity
+     */
+    public void removeALLActivity_() {
+        //通过循环，把集合中的所有Activity销毁
+        for (Activity activity : oList) {
+            activity.finish();
+        }
     }
 
     public void createUser(int id, int image_id, int gamescore, String username, String nickname)
@@ -38,6 +79,8 @@ public class MyApplication extends Application {
             cientService.start();
         cientService.sendMessage(new LogMessage(id,nickname));
     }
+
+    public User getMyself(){return user;}
 
     public void finish(){this.finish();}
 
@@ -91,13 +134,23 @@ public class MyApplication extends Application {
         return user.getNickname();
     }
 
+    public String getRoomField(int id){return cientService.getRoomField(id);}
+
     public String[] getPlayername(){return cientService.getPlayername();}
+
+    public HashMap<String, Integer> getInvitors(){return cientService.getInvitors();}
+
+    public int getId(){return user.getId();}
+
+    public int getRank(){return user.getGame_score();}
 
     public List<String> getWrong(){return cientService.getWrong_quest();}
 
     public int getSubNow(){return cientService.getSubnow();}
 
     public void addWrong(String q){cientService.addWrong(q);}
+
+    public void removeInvitor(String l){cientService.removeInvite(l);}
 
     public void resetWrong(){cientService.resetWrong();}
 
@@ -136,6 +189,16 @@ public class MyApplication extends Application {
     }
 
     public void sendMessage(AnswerMessage msg){cientService.sendMessage(msg);}
+
+    public void sendMessage(InviteMessage msg){cientService.sendMessage(msg);}
+
+    public void sendMessage(CreateRoomMessage msg){cientService.sendMessage(msg);}
+
+    public void sendMessage(AcceptMessage msg){cientService.sendMessage(msg);}
+
+    public void sendMessage(DeleteRoomMessage msg){cientService.sendMessage(msg);}
+
+    public void sendMessage(RoomStartMessage msg){cientService.sendMessage(msg);}
 
     public boolean ifMatched()
     {

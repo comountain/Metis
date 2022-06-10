@@ -10,7 +10,7 @@ public class config {
     //    Log 打印的 tag
     public static final String LogTag = "metis";
     //    主机 host
-    public static final String HOST = "http://192.168.0.104:8081/";
+    public static final String HOST = "http://192.168.0.107:8081/";
     //    登录网址
     public static final String URL_LOGIN = HOST + "LogLet";
     //    账号信息
@@ -25,5 +25,23 @@ public class config {
     //    获取试卷题目网址
     public static final String URL_DEBUG = HOST + "debug";
     public static final String URL_UP_USER_GRADE = HOST + "UpUserGrade";
+
+    //    获取好友信息网址
+    public static final String URL_GET_FRIENDS = HOST+"getFriends";
+
+    //    获取好友申请信息网址
+    public static final String URL_GET_FRIENDS_REQUEST = HOST + "getFriendsRequest";
+
+    //    添加好友网址
+    public static final String URL_ADD_FRIEND = HOST + "addFriend";
+
+    //    处理申请网址
+    public static final String URL_SOLVE_REQUEST = HOST + "solveRequest";
+
+    //    发出对战邀请网址
+    public static final String URL_INVITE_BATTLE = HOST + "inviteBattle";
+
+    //    获取在线好友
+    public static final String URL_GET_ONLINE_FRIENDS = HOST +"getOnlineFriends";
 
 }

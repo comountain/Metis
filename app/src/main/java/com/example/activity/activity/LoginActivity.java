@@ -1,5 +1,6 @@
 package com.example.activity.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,15 +27,22 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends AppCompatActivity {
+    private Activity oContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
+        oContext = this;
+        addActivity();
         //在打开页面时初始化共享存储对象spf  "users"表名
         //spf=getSharedPreferences("users", Context.MODE_PRIVATE);
     }
 
+    public void addActivity() {
+        ((MyApplication)getApplication()).addActivity_(oContext);// 调用myApplication的添加Activity方法
+    }
 
     public void login(View view) {
         EditText accountET = findViewById(R.id.login_account);

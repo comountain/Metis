@@ -1,13 +1,20 @@
 package com.example.activity.service;
 
 
+import android.widget.Toast;
+
 import com.example.activity.bean.QuestBean;
+import com.example.activity.message.AcceptMessage;
 import com.example.activity.message.AnswerMessage;
 import com.example.activity.message.CompeteMessage;
+import com.example.activity.message.CreateRoomMessage;
+import com.example.activity.message.DeleteRoomMessage;
 import com.example.activity.message.GamerMessage;
+import com.example.activity.message.InviteMessage;
 import com.example.activity.message.LeaveMessage;
 import com.example.activity.message.LogMessage;
 import com.example.activity.message.MatchMessage;
+import com.example.activity.message.RoomStartMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +38,9 @@ public class CientService {
     private HashMap<String, String> gamerscore = new HashMap<>();
     private HashMap<String, Boolean> if_renew = new HashMap<>();
     private List<String> wrong_quest = new ArrayList<>();
+    private HashMap<String, Integer> invitors = new HashMap<>();
+    private HashMap<Integer, String> room_field = new HashMap<>();
+    public String owner_id = "no";
     boolean ifMatched = false;
     public int wrapper_order = -1;
 
@@ -80,18 +90,32 @@ public class CientService {
                                         gamerscore.put(news[1],news[2]);
                                     }
                                     break;
+                                case "4":
+                                    String invitor = news[2];
+                                    String fir = news[3];
+                                    int invitor_id = Integer.parseInt(news[1]);
+                                    invitors.put(invitor, invitor_id);
+                                    room_field.put(invitor_id, fir);
+                                    break;
+                                case "5":
+                                    playername = new String[size - 2];
+                                    for(int i = 0; i < size - 2; i++)
+                                        playername[i] = news[i + 2];
+                                    owner_id = news[1];
                             }
                         }
                     });
                 }
             });
-            ChannelFuture future =bootstrap.connect("192.168.0.104",8888).sync();
+            ChannelFuture future =bootstrap.connect("192.168.0.107",8888).sync();
             channel = (SocketChannel) future.channel();
 
         } catch (Exception e){
             group.shutdownGracefully();
         }
     }
+
+    public String caonima(){return owner_id;}
 
     public int getSubnow()
     {
@@ -100,6 +124,11 @@ public class CientService {
 
     public boolean isIfMatched() {
         return ifMatched;
+    }
+
+    public String getRoomField(int id)
+    {
+        return room_field.get(id);
     }
 
     public HashMap<String, String> getGameresult()
@@ -117,6 +146,17 @@ public class CientService {
             playername[0] = user;
         }
         return playername;
+    }
+
+    public HashMap<String, Integer> getInvitors()
+    {
+        return invitors;
+    }
+
+    public void removeInvite(String i)
+    {
+        room_field.remove(invitors.get(i));
+        invitors.remove(i);
     }
 
     public void addWrong(String wrong){wrong_quest.add(wrong);}
@@ -164,6 +204,36 @@ public class CientService {
     }
 
     public void sendMessage(LogMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(InviteMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(CreateRoomMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(AcceptMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(DeleteRoomMessage mes)
+    {
+        String msg = mes.MessageString();
+        channel.writeAndFlush(msg);
+    }
+
+    public void sendMessage(RoomStartMessage mes)
     {
         String msg = mes.MessageString();
         channel.writeAndFlush(msg);

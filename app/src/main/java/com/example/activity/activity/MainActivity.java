@@ -69,16 +69,20 @@ public class MainActivity extends BaseActivity {
             case R.id.main_to_main:
                 break;
             case R.id.main_to_home:
+                Intent intent2 = new Intent(MainActivity.this, CreateRoomActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.main_to_mine:
+                Intent intent3 = new Intent(MainActivity.this, FriendActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.main_to_mess:
-                Intent intent = new Intent(MainActivity.this,MyActivity.class);
-                startActivity(intent);
+                Intent intent4 = new Intent(MainActivity.this,MyActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.main_to_market:
-                Intent intent6 = new Intent(MainActivity.this, MarketActivity.class);
-                startActivity(intent6);
+                Intent intent5 = new Intent(MainActivity.this, MarketActivity.class);
+                startActivity(intent5);
                 break;
         }
     }
