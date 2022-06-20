@@ -19,12 +19,12 @@
 
     <ImageView
         android:id="@+id/market_say"
-        android:layout_width="170dp"
-        android:layout_height="300dp"
+        android:layout_width="177dp"
+        android:layout_height="298dp"
         android:layout_marginTop="264dp"
         android:src="@drawable/say"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
+        app:layout_constraintHorizontal_bias="0.598"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,11 +32,11 @@
         android:id="@+id/market_show"
         android:layout_width="60dp"
         android:layout_height="134dp"
-        android:layout_marginTop="340dp"
-        android:textSize="10sp"
+        android:layout_marginTop="336dp"
         android:text="随便看看，总有你需要的"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,15 +98,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/money1"
+        android:layout_width="28dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="216dp"
+        android:elevation="100dp"
+        android:src="@drawable/money"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/market_weak_buy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="216dp"
-        android:text="$500"
         android:background="#F16C4D"
+        android:text="500"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintHorizontal_bias="0.253"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/money2"
+        android:layout_width="28dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="216dp"
+        android:elevation="100dp"
+        android:src="@drawable/money"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,8 +140,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="216dp"
-        android:text="$500"
         android:background="#F16C4D"
+        android:text="500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.619"
         app:layout_constraintStart_toStartOf="parent"

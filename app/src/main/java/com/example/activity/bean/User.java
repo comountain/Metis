@@ -8,7 +8,10 @@ public class User {
     private int userid ;
     private String username;
     private int image_id ;
+    private int money = 0;
     private int game_score;
+    int brave = 0;
+    int weak = 0;
     private String nickname;
     private HashMap<String, Date> tools;
 
@@ -19,6 +22,36 @@ public class User {
         this.game_score = game_score;
         this.username = username;
         this.nickname = nickname;
+    }
+
+    public void setMoney(int m)
+    {
+        money = m;
+    }
+
+    public void setBrave(int b)
+    {
+        brave = b;
+    }
+
+    public void setWeak(int w)
+    {
+        weak = w;
+    }
+
+    public int getBrave()
+    {
+       return brave;
+    }
+
+    public int getWeak()
+    {
+        return weak;
+    }
+
+    public int getMoney()
+    {
+        return money;
     }
 
     public int getId()

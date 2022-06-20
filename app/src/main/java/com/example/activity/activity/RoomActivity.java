@@ -1,5 +1,7 @@
 package com.example.activity.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Looper;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.example.activity.R;
 import com.example.activity.bean.User;
 import com.example.activity.bean.UserBean;
 import com.example.activity.constants.config;
+import com.example.activity.message.AcceptMessage;
 import com.example.activity.message.CompeteMessage;
 import com.example.activity.message.DeleteRoomMessage;
 import com.example.activity.message.InviteMessage;
@@ -48,6 +51,8 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
     private String[] playername;
     private int owner_id;
     private int sec = 0;
+    private boolean if_removed = false;
+    private int[] icons={R.drawable.touxiang1,R.drawable.touxiang2,R.drawable.touxiang3,R.drawable.touxiang4,R.drawable.touxiang5,R.drawable.touxiang6};
 
     @BindView(R.id._chro_room)
     Chronometer chronometer;
@@ -74,8 +79,11 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
         player[1] = (ImageView) findViewById(R.id.room_player2);
         player[2] = (ImageView) findViewById(R.id.room_player3);
         player[3] = (ImageView) findViewById(R.id.room_player4);
-        setChronometer();
+        playername = new String[1];
+        playername[0] = ((MyApplication)getApplication()).getNickname();
+        refresh(1);
     }
+
 
     public void refresh(int num)
     {
@@ -107,7 +115,7 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
             case 3:
                 name[0].setVisibility(View.VISIBLE);
                 name[1].setVisibility(View.VISIBLE);
-                name[3].setVisibility(View.VISIBLE);
+                name[2].setVisibility(View.VISIBLE);
                 name[0].setText(playername[0]);
                 name[1].setText(playername[1]);
                 name[2].setText(playername[2]);
@@ -164,6 +172,7 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
         friendInviteListView = (ListView) findViewById(R.id.list_invitefriend);
         InviteFriendAdapter invitefriendAdapter=new InviteFriendAdapter();
         friendInviteListView.setAdapter(invitefriendAdapter);
+        setChronometer();
     }
 
     class InviteFriendAdapter extends BaseAdapter {
@@ -206,6 +215,7 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
             }
             holder.nickname.setText(onlineFriends.get(position).getNickname());
             holder.rank.setText(""+onlineFriends.get(position).getGame_score());
+            holder.iv.setBackgroundResource(icons[onlineFriends.get(position).getImage_id()]);
             setOnClick(holder.invite,onlineFriends.get(position).getUserid(),position);
             return convertView;
         }
@@ -238,19 +248,36 @@ public class RoomActivity extends BaseActivity implements Chronometer.OnChronome
 
     @Override
     public void onChronometerTick(Chronometer chronometer) {
+        if(if_removed)
+            return;
         sec ++;
         playername = ((MyApplication)getApplication()).getPlayername();
-        //if(playername.length > 2)
         refresh(playername.length);
-        if(playertype.equals("invited"))
+        if(playertype.equals("invited") && sec > 2)
         {
             owner_id = Integer.parseInt(((MyApplication)getApplication()).caonima());
+            if(owner_id == 0)
+            {
+                if_removed = true;
+                android.app.AlertDialog textTips;
+                textTips = new AlertDialog.Builder(RoomActivity.this)
+                        .setMessage("房间已注销")
+                        .setPositiveButton("退出", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(RoomActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .show();
+                textTips.setCancelable(false);
+            }
             Button bt = (Button) findViewById(R.id.btn_start_fvf);
             bt.setText("等待房主");
         }
         else
             owner_id = ((MyApplication)getApplication()).getId();
-        if (!((MyApplication) getApplication()).ifMatched()) {
+        if (sec == 1 || !((MyApplication) getApplication()).ifMatched()) {
             return;
         }
         Intent intent1 = new Intent(RoomActivity.this, AnswerActivity.class);

@@ -40,7 +40,7 @@ public class CientService {
     private List<String> wrong_quest = new ArrayList<>();
     private HashMap<String, Integer> invitors = new HashMap<>();
     private HashMap<Integer, String> room_field = new HashMap<>();
-    public String owner_id = "no";
+    public String owner_id = "-1";
     boolean ifMatched = false;
     public int wrapper_order = -1;
 
@@ -98,10 +98,16 @@ public class CientService {
                                     room_field.put(invitor_id, fir);
                                     break;
                                 case "5":
+                                    owner_id = news[1];
+                                    if(news[1].equals("0"))
+                                    {
+                                        playername = null;
+                                        break;
+                                    }
                                     playername = new String[size - 2];
                                     for(int i = 0; i < size - 2; i++)
                                         playername[i] = news[i + 2];
-                                    owner_id = news[1];
+
                             }
                         }
                     });

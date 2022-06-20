@@ -34,7 +34,7 @@ public class WaitActivity extends BaseActivity {
                 try {
                     String username = ((MyApplication) getApplication()).getNickname();
 
-                    ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, num, field, 0));
+                    ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, num, field, 0, Integer.parseInt(((MyApplication)getApplication()).getGame_score())));
                     while (!((MyApplication) getApplication()).ifMatched()) {
                         continue;
                     }
@@ -59,7 +59,7 @@ public class WaitActivity extends BaseActivity {
         {
             case R.id.wait_ret:
                 String username = ((MyApplication)getApplication()).getNickname();
-                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, "2", field, 1));
+                ((MyApplication) getApplication()).sendMessage(new MatchMessage(username, "2", field, 1, Integer.parseInt(((MyApplication)getApplication()).getGame_score())));
                 Intent intent = new Intent(WaitActivity.this, MainActivity.class);
                 startActivity(intent);
         }

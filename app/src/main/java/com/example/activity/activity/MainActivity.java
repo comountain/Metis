@@ -4,7 +4,10 @@ import android.graphics.Color;
 import android.view.View;
 
 import android.content.Intent;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 
 import com.example.activity.MyApplication;
 import com.example.activity.R;
@@ -12,9 +15,13 @@ import com.example.activity.R;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+    int weak = 0;
+    int brave = 0;
     private String game_score;
     private String nickname;
     private String rank;
+    private int[] icons={R.drawable.weaker, R.drawable.yonggan};
+
 
     @Override
     int getLayoutId()
@@ -25,6 +32,8 @@ public class MainActivity extends BaseActivity {
     @Override
     void getPreIntent()
     {
+        brave = ((MyApplication)getApplication()).getBrave();
+        weak = ((MyApplication)getApplication()).getWeak();
         nickname=((MyApplication)getApplication()).getNickname();
         game_score=((MyApplication)getApplication()).getGame_score();
         if(Integer.parseInt(game_score) <= 200)
@@ -42,6 +51,25 @@ public class MainActivity extends BaseActivity {
     @Override
     void initView()
     {
+        TextView stateshow = (TextView)findViewById(R.id.main_state_show);
+        ImageView state = (ImageView)findViewById(R.id.main_state);
+        if(brave > 0)
+        {
+            state.setBackgroundResource(icons[1]);
+            stateshow.setText("你的内心充满了勇气！ 效果：" + brave + " 回合");
+            stateshow.setTextColor(Color.RED);
+        }
+        else if(weak > 0)
+        {
+            state.setBackgroundResource(icons[0]);
+            stateshow.setText("你服下了懦夫药水... 效果：" + weak + " 回合");
+            stateshow.setTextColor(Color.GRAY);
+        }
+        else
+        {
+            state.setVisibility(View.INVISIBLE);
+            stateshow.setVisibility(View.INVISIBLE);
+        }
         TextView sc=(TextView)findViewById(R.id.main_mine);
         String show = nickname + "\n" + "当前称号： " + rank;
         sc.setText(show);
@@ -55,6 +83,9 @@ public class MainActivity extends BaseActivity {
             sc.setTextColor(Color.YELLOW);
         else
             sc.setTextColor(Color.RED);
+        TextView tx = (TextView) findViewById(R.id.main_money);
+        int money = ((MyApplication)getApplication()).getMoney();
+        tx.setText(money+"");
     }
 
     @OnClick({R.id.btn_start_answer, R.id.main_to_main, R.id.main_to_home, R.id.main_to_mine, R.id.main_to_mess,R.id.main_to_market})

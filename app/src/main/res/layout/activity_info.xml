@@ -55,15 +55,15 @@
         android:textColor="#000000"
         android:textSize="15sp"
         android:id="@+id/info_back"/>
+
     <Button
+        android:id="@+id/info_modify"
         android:layout_width="wrap_content"
         android:layout_height="70sp"
         android:layout_below="@id/info_gamescore"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100sp"
-        android:text="修改昵称"
-        android:onClick="modify"
-        android:id="@+id/info_modify"
-        android:textSize="25sp"
-        android:background="@drawable/shape_pressed"/>
+        android:background="@drawable/shape_pressed"
+        android:text="更换头像"
+        android:textSize="25sp" />
 </RelativeLayout>

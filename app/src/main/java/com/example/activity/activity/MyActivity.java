@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ public class MyActivity extends BaseActivity {
     private String game_score;
     private String nickname;
     private String rank;
+    private int[] icons={R.drawable.touxiang1,R.drawable.touxiang2,R.drawable.touxiang3,R.drawable.touxiang4,R.drawable.touxiang5,R.drawable.touxiang6};
 
     @Override
     int getLayoutId() {
@@ -39,6 +41,8 @@ public class MyActivity extends BaseActivity {
     }
     @Override
     void initView(){
+        ImageView ima = (ImageView)findViewById(R.id.my_touxiang);
+        ima.setBackgroundResource(icons[((MyApplication)getApplication()).getImageId()]);
         TextView ni=(TextView)findViewById(R.id.mynick);
         ni.setText(nickname);
         TextView sc = (TextView) findViewById(R.id.myscore);
@@ -66,13 +70,17 @@ public class MyActivity extends BaseActivity {
             sc.setTextColor(Color.RED);
         sc.setText(rank);
     }
-    @OnClick({R.id.my_1, R.id.mess_to_home, R.id.mess_to_main, R.id.mess_to_mine})
+    @OnClick({R.id.my_1,R.id.my_2, R.id.mess_to_home, R.id.mess_to_main, R.id.mess_to_mine})
     public void onViewClicked(View view) {
         switch(view.getId())
         {
             case R.id.my_1:
                 Intent intent = new Intent(MyActivity.this, InfoActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.my_2:
+                Intent intent4 = new Intent(MyActivity.this, AddquestActivity.class);
+                startActivity(intent4);
                 break;
             case R.id.mess_to_home:
                 Intent intent2 = new Intent(MyActivity.this, CreateRoomActivity.class);

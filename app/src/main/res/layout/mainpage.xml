@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.MainActivity"
     android:orientation="vertical"
+    android:background="@drawable/s_back"
     android:padding="20dp"
    >
 

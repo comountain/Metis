@@ -9,20 +9,40 @@
     <LinearLayout
         android:id="@+id/linearLayout_mainshower"
         android:layout_width="745dp"
-        android:layout_height="70dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:background="#F16C4D"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-1dp">
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/main_mine"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="50dp"
-            android:layout_marginStart="20sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="0sp"
             android:text="nickname"
             android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/money" />
+
+        <TextView
+            android:id="@+id/main_money"
+            android:layout_width="90dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="5sp"
+            android:layout_marginTop="13sp"
+            android:background="@color/white"
+            android:text="money"
+            android:textSize="10sp" />
 
     </LinearLayout>
 
@@ -43,15 +63,16 @@
             android:layout_height="70dp"
             android:layout_marginStart="275dp"
             android:background="@drawable/market" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="70dp"
             android:layout_height="30dp"
             android:layout_marginStart="275dp"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="集市"
             android:textColor="@color/black"
-            android:text="集市" />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -74,6 +95,12 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img" />
 
 
     </LinearLayout>
@@ -99,9 +126,9 @@
             android:layout_marginTop="8dp"
             android:layout_weight="1"
             android:background="#00000000"
-            android:textColor="@color/white"
             android:gravity="center"
-            android:text="主页" />
+            android:text="主页"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/main_to_home"
@@ -135,6 +162,27 @@
             android:gravity="center"
             android:text="账号" />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/main_state"
+        android:layout_width="42dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="640dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/main_state_show"
+        android:layout_width="350dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="620dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_mainshower" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

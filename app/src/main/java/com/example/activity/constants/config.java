@@ -17,6 +17,11 @@ public class config {
     public static final String URL_GET_INFO=HOST + "getInfo";
     public static final String URL_UPDATE_INFO=HOST + "updateInfo";
     public static final String URL_UPDATE_SCORE = HOST + "updateScore";
+    public static final String URL_UPDATE_MONEY = HOST + "updateMoney";
+    public static final String URL_UPDATE_WEAK = HOST + "updateWeak";
+    public static final String URL_UPDATE_BRAVE = HOST + "updateBrave";
+    public static final String URL_UPDATE_HEAD = HOST + "updateHead";
+    public static final String URL_ADD_QUEST = HOST + "addQuestadds";
     //    注册网址
     public static final String URL_SIGNUP = HOST + "RegLet";
     //    获取问题网址

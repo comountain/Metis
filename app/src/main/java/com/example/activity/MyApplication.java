@@ -2,6 +2,7 @@ package com.example.activity;
 
 import android.app.Activity;
 import android.app.Application;
+import android.widget.Toast;
 
 import com.example.activity.bean.QuestBean;
 import com.example.activity.message.AcceptMessage;
@@ -73,12 +74,37 @@ public class MyApplication extends Application {
         boolean havein = false;
         if(user != null)
             havein = true;
-        user = new User(id,image_id, gamescore,username,nickname);
+        user = new User(id,gamescore, image_id,username,nickname);
         cientService.setUser(user.getNickname());
         if(!havein)
             cientService.start();
         cientService.sendMessage(new LogMessage(id,nickname));
     }
+
+    public void setWeak(int w)
+    {
+        user.setWeak(w);
+    }
+
+    public int getWeak()
+    {
+        return user.getWeak();
+    }
+
+    public void setBrave(int w)
+    {
+        user.setBrave(w);
+    }
+
+    public int getBrave()
+    {
+        return user.getBrave();
+    }
+
+
+    public void setMoney(int m){user.setMoney(m);}
+
+    public int getMoney(){return user.getMoney();}
 
     public User getMyself(){return user;}
 
@@ -102,6 +128,10 @@ public class MyApplication extends Application {
     {
         return username;
     }
+
+    public int getImageId(){return user.getImage_id();}
+
+    public void setImageId(int i){user.setImage_id(i);}
 
     public void setGame_score(String score) {
         game_score = score;
@@ -187,6 +217,8 @@ public class MyApplication extends Application {
     {
         cientService.sendMessage(msg);
     }
+
+    public void sendMessage(LeaveMessage msg){cientService.senMessage(msg);}
 
     public void sendMessage(AnswerMessage msg){cientService.sendMessage(msg);}
 

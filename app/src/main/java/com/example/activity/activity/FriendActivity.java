@@ -37,7 +37,7 @@ public class FriendActivity extends BaseActivity {
     private ListView friendsListView;
     private ListView friendsRequestListView;
     private EditText editText;
-    //private int[] icons={R.drawable.touxaing_img1,R.drawable.touxaing_img2};
+    private int[] icons={R.drawable.touxiang1,R.drawable.touxiang2,R.drawable.touxiang3,R.drawable.touxiang4,R.drawable.touxiang5,R.drawable.touxiang6};
     @Override
     int getLayoutId()
     {
@@ -199,7 +199,7 @@ public class FriendActivity extends BaseActivity {
             }
             holder.nickname.setText(friends.get(position).getNickname());
             holder.rank.setText(""+friends.get(position).getGame_score());
-           // holder.iv.setBackgroundResource(icons[Integer.parseInt(friends.get(position).getImg())]);
+            holder.iv.setBackgroundResource(icons[friends.get(position).getImage_id()]);
             return convertView;
         }
     }
@@ -250,7 +250,7 @@ public class FriendActivity extends BaseActivity {
             }
             holder.nickname.setText(friendsRequest.get(position).getNickname());
             holder.rank.setText(""+friendsRequest.get(position).getGame_score());
-            //holder.iv.setBackgroundResource(icons[Integer.parseInt(friendsRequest.get(position).getImage_id())]);
+            holder.iv.setBackgroundResource(icons[friendsRequest.get(position).getImage_id()]);
             setOnClick(holder.accept,1,friendsRequest.get(position).getUserid());
             setOnClick(holder.refuse,2,friendsRequest.get(position).getUserid());
             return convertView;

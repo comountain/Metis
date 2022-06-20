@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.activity.MyApplication;
 import com.example.activity.R;
 import com.example.activity.message.AcceptMessage;
+import com.example.activity.message.LeaveMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,13 @@ public abstract class BaseActivity extends FragmentActivity{
             {
                 while(true)
                 {
-                    if(((MyApplication)getApplication()).getInvitors().isEmpty())
+                    HashMap<String, Integer> in;
+                    in = ((MyApplication)getApplication()).getInvitors();
+                    if(in.isEmpty())
                         continue;
                     String invitor = null;
                     int invitor_id = 0;
-                    for(Map.Entry<String, Integer> entry : ((MyApplication)getApplication()).getInvitors().entrySet())
+                    for(Map.Entry<String, Integer> entry : in.entrySet())
                     {
                         invitor = entry.getKey();
                         invitor_id = entry.getValue();
@@ -113,6 +116,7 @@ public abstract class BaseActivity extends FragmentActivity{
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                ((MyApplication)getApplication()).sendMessage(new LeaveMessage(((MyApplication)getApplication()).getId()));
                                 removeALLActivity();
                             }
                         })

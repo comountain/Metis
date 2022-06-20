@@ -23,6 +23,12 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.AddquestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.HeadActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.RoomActivity"
             android:exported="false" />
         <activity

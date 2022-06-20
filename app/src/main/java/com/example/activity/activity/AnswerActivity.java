@@ -73,6 +73,7 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
     private TextView[] name;
     private ImageView[] player;
     private HashMap<String, Integer> UIhelper = new HashMap<>();
+    private int[] icons={R.drawable.touxiang1,R.drawable.touxiang2,R.drawable.touxiang3,R.drawable.touxiang4,R.drawable.touxiang5,R.drawable.touxiang6};
 
     @Override
     int getLayoutId()
@@ -227,12 +228,36 @@ public class AnswerActivity extends BaseActivity implements Chronometer.OnChrono
         }
         if (second == 0) {
             ((MyApplication)getApplication()).restSubNow();
-            vp_answer.setCurrentItem(++nowpager);
-            ifSub = false;
-            Button subm = (Button) findViewById(R.id._btn_submit);
-            subm.setText("提交答案");
-            renew(((MyApplication)getApplication()).getGameresult());
-            second = 20;
+            if(nowpager == fragmentList.size()-1)
+            {
+                renew(((MyApplication)getApplication()).getGameresult());
+                Thread th = new Thread(){
+                    @Override
+                    public void run()
+                    {
+                        try {
+                            Thread.sleep(2000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        ((MyApplication)getApplication()).sendMessage(new CompeteMessage(username, myscore, 1));
+                        Intent intent1 = new Intent(AnswerActivity.this,GradeActivity.class);
+                        intent1.putExtra("grade",myscore+"");
+                        intent1.putExtra("num",playertype);
+                        startActivity(intent1);
+                    }
+                };
+                th.start();
+            }
+            else
+            {
+                vp_answer.setCurrentItem(++nowpager);
+                ifSub = false;
+                Button subm = (Button) findViewById(R.id._btn_submit);
+                subm.setText("提交答案");
+                renew(((MyApplication) getApplication()).getGameresult());
+                second = 20;
+            }
         }
     }
 

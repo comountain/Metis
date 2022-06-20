@@ -112,8 +112,11 @@ public class LoginActivity extends AppCompatActivity {
                         String nickname = null;
                         String game_score=null;
                         String username = null;
+                        int money = -1;
                         int id = -1;
                         int image_id = -1;
+                        int weak = 0;
+                        int brave = 0;
                         try {
                             nickname= obj.getString("nickname");
                         } catch (JSONException e) {
@@ -139,11 +142,30 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        try {
+                            money = Integer.parseInt(obj.getString("money"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            weak = Integer.parseInt(obj.getString("weak"));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            brave = Integer.parseInt(obj.getString("brave"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         ((MyApplication)getApplication()).setGame_score(game_score);
                         ((MyApplication)getApplication()).setNickname(nickname);
                         LogUtils.e("initNet: 联网结束…………");
                         showDialog("登录成功！");
                         ((MyApplication)getApplication()).createUser(id, image_id, Integer.parseInt(game_score),username,nickname);
+                        ((MyApplication)getApplication()).setWeak(weak);
+                        ((MyApplication)getApplication()).setBrave(brave);
+                        ((MyApplication)getApplication()).setMoney(money);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         ((MyApplication)getApplication()).setUsername(account);
                         intent.putExtra("account", account);
